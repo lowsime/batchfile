@@ -1,5 +1,4 @@
 @echo off
-:: Verifica i permessi di amministratore e richiede i permessi se necessario
 net session >nul 2>&1
 if %errorlevel% neq 0 (
     echo Richiedendo permessi di amministratore...
@@ -11,10 +10,14 @@ echo Caricamento in corso...
 ping localhost -n 5 > nul
 echo Pulizia in corso...
 
-:: Cancella il contenuto del cestino
-rd /s /q %systemdrive%\$Recycle.bin
+for /f "usebackq" %%i in (`powershell -Command "((New-Object -ComObject Shell.Application).NameSpace(10).Items() | Measure-Object).Count"`) do set numero=%%i
+if %numero%==0 (
+    echo Il cestino e gia vuoto. Operazione annullata.
+    pause
+    exit /b
+)
 
-:: Cancella il contenuto della cartella "Recente"
+rd /s /q %systemdrive%\$Recycle.bin
 del /f /q "%APPDATA%\Microsoft\Windows\Recent\*"
 
 echo Operazione completata.
