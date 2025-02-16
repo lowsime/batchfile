@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-set "parole_chiave=eval exec spawn child_process base64 decode require import fetch XMLHttpRequest Function"
+set "parole_chiave=eval exec spawn child_process base64 decode require import fetch XMLHttpRequest Function eval socket.on process.env process.exit process.kill"
 set "bersaglio=percorso-della-directory-o-file"
 
 if exist "%bersaglio%" (
